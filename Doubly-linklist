@@ -1,0 +1,87 @@
+#include<stdio.h>
+#include<malloc.h>
+#include<stdlib.h>
+struct node
+{
+        int data;
+        struct node *next;
+        struct node *prev;
+}*start;
+
+
+create_list()
+{
+        int data;
+        struct node *q,*temp;
+        temp=malloc(sizeof (struct node));
+        q=malloc (sizeof (struct node));
+        printf("Enter the data:");
+        scanf("%d",&data);
+        q=start;
+        temp->data+data;
+        temp->next=NULL;
+        if(start==NULL)
+        {
+            temp->prev=NULL;
+            start=temp;
+        }
+        else
+        {
+                q=start;
+                while(q-> next!=NULL)
+                {
+                        q=q->next;
+                }
+                q->next=temp;
+                temp->prev=q;
+        }
+}
+
+display()
+{
+        struct node *q;
+        q=malloc(sizeof (struct node));
+        if(start==NULL)
+        {
+                printf("List is empty \n");
+        }
+        q=start;
+        printf("List is:\n");
+        while(q!=NULL)
+        {
+                printf("%d\n",q->data);
+                q=q->next;
+        }
+}
+
+int main()
+{
+        int choice,n,m,pos,i;
+        start=NULL;
+        while(1)
+        {
+                printf("\n 1.Create list \n");
+                printf("2.Display \n");
+                printf("3.Quit\n");
+                printf("Enter your choice:");
+                scanf("%d",&choice);
+                switch(choice)
+                {
+                        case 1: printf("How many nodes:");
+                                scanf("%d",&n);
+                                for(i=0;i<n;i++)
+                                {
+                                   create_list();
+                                }
+                                break;
+                        case 2:
+                                display ();
+                                break;
+                        case 3:
+                                exit(1);
+                                break;
+                        default:
+                                printf("Please enter a valid choice");
+                }
+        }
+}
