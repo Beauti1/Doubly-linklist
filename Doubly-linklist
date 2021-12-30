@@ -13,17 +13,17 @@ create_list()
 {
         int data;
         struct node *q,*temp;
-        temp=malloc(sizeof (struct node));
-        q=malloc (sizeof (struct node));
-        printf("Enter the data:");
-        scanf("%d",&data);
+        temp=malloc(sizeof(struct node));
+        q=malloc (sizeof(struct node));
+        printf("Please enter the data:");
+        scanf("%d",&temp-> data);
         q=start;
         temp->data=data;
         temp->next=NULL;
         if(start==NULL)
         {
-            temp->prev=NULL;
-            start=temp;
+          temp->data=data;
+          start=temp;
         }
         else
         {
@@ -52,125 +52,185 @@ display()
         {
                 printf("List is empty \n");
         }
-
 }
+
+
 
 insert_beg()
 {
-    int data;
-    struct node *temp;
-    temp=malloc (sizeof(struct node));
-    printf("Enter the data:");
-    scanf("%d",&data);
-    temp->data=data;
-    temp->prev=NULL;
-    temp->next=start;
-    start->prev=temp;
-    start=temp;
+        struct node *temp;
+        temp=malloc(sizeof(struct node));
+        printf("Enter data part:");
+        scanf("%d",&temp->data);
+        temp->data=data;
+        temp->prev=NULL;
+        temp->next=start;
+        start->prev=temp;
+        start=temp;
+}
+
+
+insert_mid()
+{
+        int pos, data,i;
+        struct node *q,*temp;
+        temp=malloc(sizeof (struct node));
+        q=malloc (sizeof (struct node));
+        q=start;
+        printf("Enter the position of node:");
+        scanf("%d",&pos);
+        printf("Please enter the data part:");
+        scanf("%d",&data);
+        for(i=1;i<pos-i;i++);
+        {
+                q=q->next;
+                if(q==NULL)
+                {
+                        printf("There are less %d elements in the list.",pos);
+                        return;
+                }
+        }
+        temp->data=data;
+        temp->next=q->next;
+        temp->prev=q->prev;
+        q-> next=temp;
 }
 
 insert_end()
 {
-    int data;
-    struct node *temp, *q;
-    temp=malloc(sizeof(struct node));
-    q=malloc (sizeof(struct node));
-    temp->prev=NULL;
-    temp->next=NULL;
-    printf("Enter the data:");
-    scanf("%d",&data);
-    temp->data=data;
-    temp->next=NULL;
-    q=start;
-    if (start==NULL) {
-
-        start=temp;
-    }
-    else {
-        while (q->next != NULL)
+        int data;
+        struct node *q,*temp;
+        temp=malloc(sizeof (struct node));
+        q=malloc (sizeof (struct node));
+        q=start;
+        printf("Please enter the data:");
+        scanf("%d",&data);
+        temp->data=data;
+        temp->next=NULL;
+        while(q->next!=NULL)
         {
-            q=q->next;
+                q=q->next;
         }
-        temp->prev=q;
         q->next=temp;
-    }
+        temp->prev=q;
 }
 
 delete_beg()
 {
-    struct node *temp;
-    temp=malloc(sizeof(struct node));
-    temp=start;
-    temp->next->prev=NULL;
-    start=temp->next;
-    free(temp);
+        struct node *temp;
+        temp=malloc(sizeof(struct node));
+        temp=start;
+        temp->next->prev=NULL;
+        start=temp->next;
+        free(temp);
 }
 
-insert_mid()
-{ 
-    int data, pos, i = 1;
-    struct node *temp, *newnode;
-    newnode = malloc(sizeof(struct node));
-    newnode->next = NULL;
-    newnode->prev = NULL;
-    printf("\nEnter position : ");
-    scanf("%d", &pos);
-    printf("\nEnter number to be inserted: ");
-    scanf("%d", &data);
-    newnode->data = data;
-    temp = start;
-    if (start == NULL) {
-        start = newnode;
-        newnode->prev = NULL;
-        newnode->next = NULL;
-    }
-     else if (pos == 1) {
-        newnode->next = start;
-        newnode->next->prev = newnode;
-        newnode->prev = NULL;
-        start = newnode;
-    }
-    else {
-        while (i < pos - 1) {
-            temp = temp->next;
-            i++;
+delete_mid()
+{
+        int pos,i;
+        struct node *q,*temp;
+        temp=malloc(sizeof (struct node));
+        q=malloc (sizeof (struct node));
+        q=start;
+        printf("Enter the position of node:");
+        scanf("%d",&pos);
+        for(i=1;i<pos-i;i++);
+        {
+                q=q->next;
+                if(q==NULL)
+                {
+                        printf("There are less %d elements in the list.",pos);
+                }
         }
-        newnode->next = temp->next;
-        newnode->prev = temp;
-        temp->next = newnode;
-        temp->next->prev = newnode;
+        temp=q->next;
+        q->next=temp->next;
+        q->prev=temp->prev;
+        free(temp);
+}
+
+delete_end()
+{
+        struct node *temp,*q;
+        temp=malloc(sizeof (struct node));
+        q=malloc(sizeof (struct node));
+        q=start;
+        while(q->next->next!=NULL)
+        {
+                q=q->next;
+        }
+        temp=q->next;
+        q->next=NULL;
+        free(temp);
+}
+
+count()
+{
+    int count=0;
+    struct node *q;
+    q=malloc(sizeof (struct node));
+    q=start;
+    while(q!=NULL)
+    {
+        q=q->next;
+        count++;
+    }
+    printf("Total no. of node %d\n",count);
+}
+
+
+search()
+{
+    int item,pos=1;
+    struct node *q;
+    q=malloc(sizeof (struct node));
+    q=start;
+    printf("Enter the item we want to search:");
+    scanf("%d",&item);
+    while(q!=NULL)
+    {
+        if(q->data==item)
+        {
+            printf("%d found at position %d\n",item,pos);
+            return 0;
+        }
+        q=q->next;
+        pos++;
+    }
+    if(q==NULL)
+    {
+        printf("Item not found.\n");
     }
 }
 
 reverse()
 {
-    struct node *p1,*p2,*p3;
-    p1=malloc(sizeof (struct node));
-    p2=malloc(sizeof (struct node));
-    p3=malloc(sizeof (struct node));
-    if(start->next==NULL)
-    {
-        printf("Only one element");
-        return;
-    }
-    p1=start;
-    p2=p1->next;
-    p3=p2->next;
-    p2->next=p1;
-    p2->prev=p3;
-    p1->next=NULL;
-    p1->prev=p2;
-    while(p3!=NULL)
-    {
-        p1=p2;
-        p2=p3;
-        p3->next=p1;
-        p2->prev=p3;
-    }
-    start=p2;
+	struct node *p1, *p2, *p3;
+	p1=malloc(sizeof(struct node));
+	p2=malloc(sizeof(struct node));
+	p3=malloc(sizeof(struct node));
+	if(start->next==NULL)
+	{
+		printf("Only one element.");
+		return 0;
+	}
+	p1=start;
+	p2=p1->next;
+	p3=p2->next;
+	p2->next=p1;
+	p2->prev=p3;
+	p1->next=NULL;
+	p1->prev=p2;
+	while(p3!=NULL);
+	{
+		p1=p2;
+		p2=p3;
+		p3->next=p1;
+		p2->prev=p3;
+	}
+	start=p2;
 }
 
-int main()
+main()
 {
         int choice,n,m,pos,i;
         start=NULL;
@@ -178,12 +238,17 @@ int main()
         {
                 printf("\n1.Create list \n");
                 printf("2.Display \n");
-                printf("3.Insert at the beginning\n");
-                printf("4.Insert at the end\n");
-                printf("5.Delete at the beginning\n");
-                printf("6.Reverse\n");
-                printf("7.Quit\n");
-                printf("\nEnter your choice:");
+                printf("3.Insert at beginning \n");
+                printf("4.Insert at middle \n");
+                printf("5.Insert at end \n");
+                printf("6.Delete at beginning \n");
+                printf("7.Delete at middle \n");
+                printf("8.Delete at end \n");
+                printf("9.Count the no. of nodes \n");
+                printf("10.Search the item \n");
+                printf("11.Reverse\n");
+                printf("12.Quit \n");
+                printf("\nYour choice:");
                 scanf("%d",&choice);
                 switch(choice)
                 {
@@ -195,21 +260,36 @@ int main()
                                 }
                                 break;
                         case 2:
-                                display();
+                                display ();
                                 break;
                         case 3:
                                 insert_beg();
                                 break;
                         case 4:
-                                insert_end();
+                                insert_mid();
                                 break;
                         case 5:
-                                delete_beg();
+                                insert_end();
                                 break;
                         case 6:
-                                reverse();
+                                delete_beg();
                                 break;
                         case 7:
+                                delete_mid();
+                                break;
+                        case 8:
+                                delete_end();
+                                break;
+                        case 9:
+                                count();
+                                break;
+                        case 10:
+                                search();
+                                break;
+                        case 11:
+                        		reverse();
+                        		break;
+                        case 12:
                                 exit(1);
                                 break;
                         default:
