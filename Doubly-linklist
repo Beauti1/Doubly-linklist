@@ -16,7 +16,7 @@ create_list()
         temp=malloc(sizeof(struct node));
         q=malloc (sizeof(struct node));
         printf("Please enter the data:");
-        scanf("%d",&temp-> data);
+        scanf("%d",&data);
         q=start;
         temp->data=data;
         temp->next=NULL;
@@ -41,6 +41,11 @@ display()
 {
         struct node *q;
         q=malloc(sizeof (struct node));
+        if(start==NULL)
+        {
+                printf("List is empty \n");
+                return;
+        }
         q=start;
         printf("List is:\n");
         while(q!=NULL)
@@ -58,10 +63,11 @@ display()
 
 insert_beg()
 {
+        int data;
         struct node *temp;
         temp=malloc(sizeof(struct node));
         printf("Enter data part:");
-        scanf("%d",&temp->data);
+        scanf("%d",&data);
         temp->data=data;
         temp->prev=NULL;
         temp->next=start;
@@ -204,13 +210,13 @@ search()
 
 reverse()
 {
-	struct node *p1, *p2, *p3;
+	struct node *p1,*p2,*p3;
 	p1=malloc(sizeof(struct node));
 	p2=malloc(sizeof(struct node));
 	p3=malloc(sizeof(struct node));
 	if(start->next==NULL)
 	{
-		printf("Only one element.");
+		printf("Only one element");
 		return 0;
 	}
 	p1=start;
@@ -220,11 +226,12 @@ reverse()
 	p2->prev=p3;
 	p1->next=NULL;
 	p1->prev=p2;
-	while(p3!=NULL);
+	while(p3!=NULL)
 	{
 		p1=p2;
 		p2=p3;
-		p3->next=p1;
+		p3=p2->next;
+		p2->next=p1;
 		p2->prev=p3;
 	}
 	start=p2;
